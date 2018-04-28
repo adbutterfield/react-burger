@@ -1,19 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './NavItem.css';
 
 const navItem = (props) => (
   <li className={styles.NavItem}>
-    <a
-      className={props.isActive ? styles.active : null}
-      href={props.link}
-    >{props.children}
-    </a>
+    <NavLink exact to={props.link} activeClassName={styles.active}>{props.children}</NavLink>
   </li>
 );
 
 navItem.propTypes = {
-  isActive: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
 };
 

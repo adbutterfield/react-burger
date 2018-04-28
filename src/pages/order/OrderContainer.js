@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import bluebird from 'bluebird';
-import Burger from './components/Burger/Burger';
+import PropTypes from 'prop-types';
+import Burger from '../../components/Burger/Burger';
 import BuildControls from './components/BuildControls/BuildControls';
-import OrderSummary from './components/OrderSummary/OrderSummary';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import errorHandler from '../../utils/ErrorHandler';
 import Modal from '../../components/ui/Modal/Modal';
 import Spinner from '../../components/ui/Spinner/Spinner';
@@ -10,54 +10,23 @@ import service from '../../service';
 
 class OrderContainer extends Component {
   state = {
-    ingredients: null,
-    totalPrice: null,
-    ingredientPrices: null,
     showOrderSummary: false,
     orderSubmitted: false,
-    hasError: false,
   };
-
-  componentDidMount() {
-    bluebird.props({
-      ingredients: service.get('/ingredients.json'),
-      defaultPrice: service.get('/defaultPrice.json'),
-    })
-      .then((data) => {
-        const ingredients = data.ingredients.data;
-        const defaultPrice = data.defaultPrice.data;
-        this.setState({
-          ingredientPrices: Object.keys(ingredients).reduce((ings, ing) => {
-            ings[ing] = ingredients[ing].defaultPrice;
-            return ings;
-          }, {}),
-          ingredients: Object.keys(ingredients).reduce((ings, ing) => {
-            ings[ing] = ingredients[ing].defaultCount;
-            return ings;
-          }, {}),
-          totalPrice: Object.keys(ingredients).reduce((initalPrice, ing) => {
-            return initalPrice + (ingredients[ing].defaultCount * ingredients[ing].defaultPrice);
-          }, defaultPrice),
-        });
-      })
-      .catch(() => {
-        this.setState({ hasError: true });
-      });
-  }
 
   getModalContent = () => {
     return this.state.orderSubmitted ?
       <Spinner /> :
       <OrderSummary
-        ingredients={this.state.ingredients}
-        toggleOrderSummaryModal={this.toggleOrderSummaryModal}
-        continuePurchase={this.continuePurchase}
-        totalPrice={this.state.totalPrice}
+        ingredients={this.props.ingredients}
+        cancelCheckout={this.toggleOrderSummaryModal}
+        continueCheckout={this.continueCheckout}
+        totalPrice={this.props.totalPrice}
       />;
   }
 
   getMainContent = () => {
-    if (this.state.ingredients && this.state.totalPrice && this.state.ingredientPrices) {
+    if (this.props.ingredients && this.props.totalPrice && this.props.ingredientPrices) {
       return (
         <React.Fragment>
           <Modal
@@ -67,38 +36,38 @@ class OrderContainer extends Component {
             {this.getModalContent()}
           </Modal>
           <BuildControls
-            ingredients={this.state.ingredients}
-            totalPrice={this.state.totalPrice}
+            ingredients={this.props.ingredients}
+            totalPrice={this.props.totalPrice}
             addIngredient={this.addIngredient}
             removeIngredient={this.removeIngredient}
-            toggleOrderSummaryModal={this.toggleOrderSummaryModal}
+            continueOrder={this.toggleOrderSummaryModal}
           />
-          <Burger ingredients={this.state.ingredients} />
+          <Burger ingredients={this.props.ingredients} />
         </React.Fragment>
       );
     }
-    if (this.state.hasError) {
+    if (this.props.hasError) {
       return <p>Ingredientes cannot be loaded!</p>;
     }
     return <Spinner />;
   }
 
   addIngredient = (type) => {
-    const newIngredients = { ...this.state.ingredients };
+    const newIngredients = { ...this.props.ingredients };
     newIngredients[type] += 1;
-    this.setState({
+    this.props.updateIngredientsAndPrice({
       ingredients: newIngredients,
-      totalPrice: parseFloat((this.state.totalPrice + this.state.ingredientPrices[type]).toFixed(2)),
+      totalPrice: parseFloat((this.props.totalPrice + this.props.ingredientPrices[type]).toFixed(2)),
     });
   }
 
   removeIngredient = (type) => {
-    if (this.state.ingredients[type]) {
-      const newIngredients = { ...this.state.ingredients };
+    if (this.props.ingredients[type]) {
+      const newIngredients = { ...this.props.ingredients };
       newIngredients[type] -= 1;
-      this.setState({
+      this.props.updateIngredientsAndPrice({
         ingredients: newIngredients,
-        totalPrice: parseFloat((this.state.totalPrice - this.state.ingredientPrices[type]).toFixed(2)),
+        totalPrice: parseFloat((this.props.totalPrice - this.props.ingredientPrices[type]).toFixed(2)),
       });
     }
   }
@@ -109,42 +78,33 @@ class OrderContainer extends Component {
     });
   }
 
-  continuePurchase = () => {
+  continueCheckout = () => {
     this.setState({
       orderSubmitted: true,
     });
-
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'xxx',
-        address: {
-          street: 'xxx',
-          postalCode: 'xxx',
-        },
-        email: 'xxx',
-      },
-    };
-
-    service.post('/orders.json', order)
-      .then(() => {
-        this.setState({
-          showOrderSummary: false,
-          orderSubmitted: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          showOrderSummary: false,
-          orderSubmitted: false,
-        });
-      });
+    this.props.history.push('/checkout');
   }
 
   render() {
     return this.getMainContent();
   }
 }
+
+OrderContainer.propTypes = {
+  ingredients: PropTypes.object,
+  ingredientPrices: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  totalPrice: PropTypes.number,
+  updateIngredientsAndPrice: PropTypes.func.isRequired,
+};
+
+OrderContainer.defaultProps = {
+  ingredients: {},
+  ingredientPrices: {},
+  totalPrice: 0,
+};
 
 export default errorHandler(OrderContainer, service);

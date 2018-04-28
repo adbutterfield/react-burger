@@ -23,7 +23,11 @@
     "no-underscore-dangle": "off",
     "prefer-destructuring": "warn",
     "space-before-function-paren": ["error", "never"],
+    "react/forbid-prop-types": "off",
+    "react/jsx-first-prop-new-line": "off",
+    "react/jsx-indent": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-max-props-per-line": "off",
     "react/prop-types": [2, {
       "ignore": ["children"]
     }]

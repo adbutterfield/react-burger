@@ -18,7 +18,7 @@ const buildControls = (props) => (
       })
     }
     <button
-      onClick={props.toggleOrderSummaryModal}
+      onClick={props.continueOrder}
       className={styles.OrderButton}
       disabled={
         !Object.keys(props.ingredients).filter((ingKey) => props.ingredients[ingKey]).length
@@ -30,10 +30,10 @@ const buildControls = (props) => (
 
 buildControls.propTypes = {
   totalPrice: PropTypes.number.isRequired,
-  ingredients: PropTypes.arrayOf('object').isRequired,
+  ingredients: PropTypes.object.isRequired,
   addIngredient: PropTypes.func.isRequired,
   removeIngredient: PropTypes.func.isRequired,
-  toggleOrderSummaryModal: PropTypes.func.isRequired,
+  continueOrder: PropTypes.func.isRequired,
 };
 
 export default buildControls;

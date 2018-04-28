@@ -12,7 +12,7 @@
 }
 .NavItem a:hover,
 .NavItem a:active,
-.NavItem a.active {
+.NavItem .active {
   color: #40a4c8;
 }
 
@@ -34,7 +34,7 @@
 
   .NavItem a:hover,
   .NavItem a:active,
-  .NavItem a.active {
+  .NavItem .active {
     background-color: #8f5c2c;
     border-bottom-color: #40a4c8;
   }
