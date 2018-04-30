@@ -1,19 +1,17 @@
-.BuildControls {
-  background-color: #cf8f2e;
+.build-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 1px #ccc;
   margin: 1rem auto;
   padding: 1rem;
 }
 @media (min-width: 768px) {
-  .BuildControls {
+  .build-controls {
     padding: 2rem 1rem;
   }
 }
 
-.OrderButton {
+.order-button {
   background-color: #DAD735;
   outline: none;
   cursor: pointer;
@@ -25,21 +23,21 @@
   box-shadow: 2px 2px 2px #966909;
 }
 
-.OrderButton:hover,
-.OrderButton:active {
+.order-button:hover,
+.order-button:active {
   background-color: #A0DB41;
   border: 1px solid #966909;
   color: #966909;
 }
 
-.OrderButton:disabled {
+.order-button:disabled {
   background-color: #C7C6C6;
   cursor: not-allowed;
   border: 1px solid #ccc;
   color: #888888;
 }
 
-.OrderButton:not(:disabled) {
+.order-button:not(:disabled) {
   animation: enable 0.3s linear;
 }
 

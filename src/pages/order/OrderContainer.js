@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import Container from 'muicss/lib/react/container';
+import Row from 'muicss/lib/react/row';
+import Col from 'muicss/lib/react/col';
 import PropTypes from 'prop-types';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from './components/BuildControls/BuildControls';
@@ -35,14 +39,22 @@ class OrderContainer extends Component {
           >
             {this.getModalContent()}
           </Modal>
-          <BuildControls
-            ingredients={this.props.ingredients}
-            totalPrice={this.props.totalPrice}
-            addIngredient={this.addIngredient}
-            removeIngredient={this.removeIngredient}
-            continueOrder={this.toggleOrderSummaryModal}
-          />
-          <Burger ingredients={this.props.ingredients} />
+          <Container fluid>
+            <Row>
+              <Col xs="12" sm="6">
+                <BuildControls
+                  ingredients={this.props.ingredients}
+                  totalPrice={this.props.totalPrice}
+                  addIngredient={this.addIngredient}
+                  removeIngredient={this.removeIngredient}
+                  continueOrder={this.toggleOrderSummaryModal}
+                />
+              </Col>
+              <Col xs="12" sm="6">
+                <Burger ingredients={this.props.ingredients} />
+              </Col>
+            </Row>
+          </Container>
         </React.Fragment>
       );
     }
@@ -107,4 +119,4 @@ OrderContainer.defaultProps = {
   totalPrice: 0,
 };
 
-export default errorHandler(OrderContainer, service);
+export default errorHandler(withRouter(OrderContainer), service);

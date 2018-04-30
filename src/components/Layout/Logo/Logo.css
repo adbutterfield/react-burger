@@ -1,9 +1,12 @@
-.Logo {
+.logo {
   background-color: #fff;
-  padding: 6px;
-  height: 100%;
+  padding: 2px;
+  height: 80%;
   border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.Logo img {
+.logo img {
   height: 100%;
 }

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import Logo from '../Logo/Logo';
 import NavItems from '../NavItems/NavItems';
 import Backdrop from '../../ui/Backdrop/Backdrop';
-import styles from './SideDrawer.css';
+import './SideDrawer.css';
 
 const sideDrawer = (props) => {
   return (
     <React.Fragment>
       <Backdrop shouldShow={props.isOpen} clickHandler={props.toggleSideDrawer} />
-      <div className={[styles.SideDrawer, props.isOpen ? styles.Open : styles.Closed].join(' ')}>
-        <div className={styles.Logo}>
+      <div className={['side-drawer', props.isOpen ? 'open' : 'closed'].join(' ')}>
+        <div className="logo-wrap">
           <Logo />
         </div>
         <nav>
-          <NavItems />
+          <NavItems toggleSideDrawer={props.toggleSideDrawer} />
         </nav>
       </div>
     </React.Fragment>

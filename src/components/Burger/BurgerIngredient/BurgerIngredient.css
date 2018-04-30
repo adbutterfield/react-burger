@@ -1,23 +1,23 @@
-.BreadBottom {
-  height: 13%;
+.bread-bottom {
+  min-height: 46px;
   width: 80%;
   background: linear-gradient(#F08E4A, #e27b36);
   border-radius: 0 0 30px 30px;
   box-shadow: inset -15px 0 #c15711;
-  margin: 2% auto;
+  margin: 4px auto;
 }
 
-.BreadTop {
-  height: 20%;
+.bread-top {
+  min-height: 74px;
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 50% 50% 0 0;
   box-shadow: inset -15px 0 #c15711;
-  margin: 2% auto;
+  margin: 4px auto;
   position: relative;
 }
 
-.Seeds1 {
+.seeds1 {
   width: 10%;
   height: 15%;
   position: absolute;
@@ -29,7 +29,7 @@
   box-shadow: inset -2px -3px #c9c9c9;
 }
 
-.Seeds1:after {
+.seeds1:after {
   content: "";
   width: 100%;
   height: 100%;
@@ -42,20 +42,20 @@
   box-shadow: inset -1px 2px #c9c9c9;
 }
 
-.Seeds1:before {
+.seeds1:before {
   content: "";
   width: 100%;
   height: 100%;
   position: absolute;
   background-color: white;
   left: 180%;
-  top: -50%;
+  top: -20%;
   border-radius: 40%;
   transform: rotate(60deg);
   box-shadow: inset -1px -3px #c9c9c9;
 }
 
-.Seeds2 {
+.seeds2 {
   width: 10%;
   height: 15%;
   position: absolute;
@@ -67,7 +67,7 @@
   box-shadow: inset -3px 0 #c9c9c9;
 }
 
-.Seeds2:before {
+.seeds2:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -80,33 +80,33 @@
   box-shadow: inset 1px 3px #c9c9c9;
 }
 
-.Meat {
+.meat {
   width: 80%;
-  height: 8%;
+  min-height: 28px;
   background: linear-gradient(#7f3608, #702e05);
-  margin: 2% auto;
+  margin: 4px auto;
   border-radius: 15px;
 }
 
-.Cheese {
+.cheese {
   width: 90%;
-  height: 4.5%;
-  margin: 2% auto;
+  min-height: 16px;
+  margin: 4px auto;
   background: linear-gradient(#f4d004, #d6bb22);
   border-radius: 20px;
 }
 
-.Lettuce {
+.lettuce {
   width: 85%;
-  height: 7%;
-  margin: 2% auto;
+  min-height: 24px;
+  margin: 4px auto;
   background: linear-gradient(#228c1d, #91ce50);
   border-radius: 20px;
 }
 
-.Bacon {
+.bacon {
   width: 80%;
-  height: 3%;
+  min-height: 12px;
   background: linear-gradient(#bf3813, #c45e38);
-  margin: 2% auto;
+  margin: 4px auto;
 }

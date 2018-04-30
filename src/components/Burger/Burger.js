@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Burger.css';
+import './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger = (props) => {
@@ -18,7 +18,7 @@ const burger = (props) => {
   const content = ingredients.length ? ingredients : noIngredients;
 
   return (
-    <div className={styles.Burger}>
+    <div className="burger">
       <BurgerIngredient type="bread-top" />
       {content}
       <BurgerIngredient type="bread-bottom" />

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Backdrop.css';
+import './Backdrop.css';
 
 const backdrop = (props) => (
-  props.shouldShow ? <button className={styles.Backdrop} onClick={props.clickHandler} /> : null
+  props.shouldShow ? <button className="backdrop" onClick={props.clickHandler} /> : null
 );
 
 backdrop.propTypes = {

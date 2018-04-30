@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './BuildControl.css';
+import './BuildControl.css';
 
 const buildControl = (props) => (
-  <div className={styles.BuildControl}>
-    <div className={styles.Label}>{props.label.toUpperCase()}</div>
+  <div className="build-control">
+    <div className="Label">{props.label.toUpperCase()}</div>
     <button
-      className={styles.More}
+      className="more"
       onClick={() => props.onAddHandler(props.label)}
     >+
     </button>
     <button
       disabled={props.removeIngredientDisabled}
-      className={styles.Less}
+      className="less"
       onClick={() => props.onRemoveHandler(props.label)}
     >-
     </button>

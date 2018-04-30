@@ -1,4 +1,4 @@
-.SideDrawer {
+.side-drawer {
   position: fixed;
   width: 280px;
   max-width: 70%;
@@ -7,25 +7,25 @@
   top: 0;
   z-index: 200;
   background-color: #fff;
-  padding: 32px 16px;
+  padding: 1rem;
   transition: transform 0.3s ease-out;
 }
 
 @media (min-width: 500px) {
-  .SideDrawer {
+  .side-drawer {
     display: none;
   }
 }
 
-.Open {
+.open {
   transform: translateX(0);
 }
 
-.Closed {
+.closed {
   transform: translateX(-100%);
 }
 
-.Logo {
-  height: 11%;
-  margin-bottom: 32px;
+.logo-wrap {
+  height: 3rem;
+  width: 3rem;
 }

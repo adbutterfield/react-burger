@@ -52,22 +52,20 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/checkout" exact render={(props) => (
+          <Route path="/checkout" exact render={() => (
             <CheckoutContainer
               ingredients={this.state.ingredients}
               totalPrice={this.state.totalPrice}
-              {...props}
             />
           )}
           />
-          <Route path="/" exact render={(props) => (
+          <Route path="/" exact render={() => (
             <OrderContainer
               ingredients={this.state.ingredients}
               totalPrice={this.state.totalPrice}
               ingredientPrices={this.state.ingredientPrices}
               updateIngredientsAndPrice={this.updateIngredientsAndPrice}
               hasError={this.state.hasError}
-              {...props}
             />
           )}
           />

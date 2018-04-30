@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './BurgerIngredient.css';
+import './BurgerIngredient.css';
 
 function getIngredient(type) {
   switch (type) {
     case ('bread-bottom'): {
-      return <div className={styles.BreadBottom} />;
+      return <div className="bread-bottom" />;
     }
     case ('bread-top'): {
       return (
-        <div className={styles.BreadTop}>
-          <div className={styles.Seeds1} />
-          <div className={styles.Seeds2} />
+        <div className="bread-top">
+          <div className="seeds1" />
+          <div className="seeds2" />
         </div>
       );
     }
     case ('meat'): {
-      return <div className={styles.Meat} />;
+      return <div className="meat" />;
     }
     case ('cheese'): {
-      return <div className={styles.Cheese} />;
+      return <div className="cheese" />;
     }
     case ('lettuce'): {
-      return <div className={styles.Lettuce} />;
+      return <div className="lettuce" />;
     }
     case ('bacon'): {
-      return <div className={styles.Bacon} />;
+      return <div className="bacon" />;
     }
     default: {
       return null;

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './BuildControls.css';
+import './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
 
 const buildControls = (props) => (
-  <div className={styles.BuildControls}>
+  <div className="build-controls">
     <p>TOTAL: <strong>${props.totalPrice.toFixed(2)}</strong></p>
     {
       Object.keys(props.ingredients).map((ingKey) => {
@@ -19,7 +19,7 @@ const buildControls = (props) => (
     }
     <button
       onClick={props.continueOrder}
-      className={styles.OrderButton}
+      className="order-button"
       disabled={
         !Object.keys(props.ingredients).filter((ingKey) => props.ingredients[ingKey]).length
       }

@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logo from '../Logo/Logo';
 import NavItems from '../NavItems/NavItems';
-import styles from './Toolbar.css';
+import './Toolbar.css';
 
 const Toolbar = (props) => (
-  <header className={styles.Toolbar}>
-    <button className={styles.DrawerToggle} onClick={props.toggleSideDrawer}>
-      <div />
-      <div />
-      <div />
+  <header className="toolbar">
+    <button className="drawer-toggle" onClick={props.toggleSideDrawer}>
+      <span className="line" />
+      <span className="line" />
+      <span className="line" />
     </button>
-    <div className={styles.Logo}>
+    <div className="logo">
       <Logo />
     </div>
-    <nav className={styles.DeskTopOnly}>
+    <nav className="hide-sm">
       <NavItems />
     </nav>
   </header>

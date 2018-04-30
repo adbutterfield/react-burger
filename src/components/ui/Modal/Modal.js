@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Backdrop from '../Backdrop/Backdrop';
-import styles from './Modal.css';
+import './Modal.css';
 
 class Modal extends Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class Modal extends Component {
           clickHandler={this.props.clickHandler}
         />
         <div
-          className={styles.Modal}
+          className="modal"
           style={{
             transform: this.props.shouldShow ? 'translateY(0)' : 'translatey(-100vh)',
             opacity: this.props.shouldShow ? 1 : 0,
