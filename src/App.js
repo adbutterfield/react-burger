@@ -4,17 +4,22 @@ import bluebird from 'bluebird';
 import service from './service';
 import Layout from './components/Layout/Layout';
 import OrderContainer from './pages/order/OrderContainer';
-import CheckoutContainer from './pages/checkout/checkoutContainer';
+import OrdersContainer from './pages/orders/OrdersContainer';
+import CheckoutContainer from './pages/checkout/CheckoutContainer';
 
 class App extends Component {
-  state = {
-    ingredients: null,
-    totalPrice: null,
-    ingredientPrices: null,
-    hasError: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients: null,
+      totalPrice: null,
+      ingredientPrices: null,
+      hasError: false,
+    };
+    this.setDefaultIngredientsAndPrice();
+  }
 
-  componentDidMount() {
+  setDefaultIngredientsAndPrice = () => {
     bluebird.props({
       ingredients: service.get('/ingredients.json'),
       defaultPrice: service.get('/defaultPrice.json'),
@@ -52,13 +57,15 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/checkout" exact render={() => (
+          <Route path="/checkout" render={() => (
             <CheckoutContainer
               ingredients={this.state.ingredients}
               totalPrice={this.state.totalPrice}
+              setDefaultIngredientsAndPrice={this.setDefaultIngredientsAndPrice}
             />
-          )}
+            )}
           />
+          <Route path="/orders" exact component={OrdersContainer} />
           <Route path="/" exact render={() => (
             <OrderContainer
               ingredients={this.state.ingredients}
@@ -67,7 +74,7 @@ class App extends Component {
               updateIngredientsAndPrice={this.updateIngredientsAndPrice}
               hasError={this.state.hasError}
             />
-          )}
+            )}
           />
         </Switch>
       </Layout>

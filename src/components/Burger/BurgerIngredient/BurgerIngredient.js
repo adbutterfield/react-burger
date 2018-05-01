@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './BurgerIngredient.css';
 
-function getIngredient(type) {
+const getIngredient = (type) => {
   switch (type) {
     case ('bread-bottom'): {
       return <div className="bread-bottom" />;
@@ -31,7 +31,7 @@ function getIngredient(type) {
       return null;
     }
   }
-}
+};
 
 class BurgerIngredient extends Component {
   static propTypes = {

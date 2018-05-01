@@ -13,7 +13,7 @@ const burger = (props) => {
     return [...arr, ...el];
   }, []);
 
-  const noIngredients = <p>Start adding ingredients!</p>;
+  const noIngredients = <p className="mui--text-center">Start adding ingredients!</p>;
 
   const content = ingredients.length ? ingredients : noIngredients;
 

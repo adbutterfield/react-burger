@@ -6,7 +6,7 @@ import Col from 'muicss/lib/react/col';
 import PropTypes from 'prop-types';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from './components/BuildControls/BuildControls';
-import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import OrderSummary from './components/OrderSummary/OrderSummary';
 import errorHandler from '../../utils/ErrorHandler';
 import Modal from '../../components/ui/Modal/Modal';
 import Spinner from '../../components/ui/Spinner/Spinner';
