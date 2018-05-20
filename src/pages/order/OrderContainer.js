@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
@@ -11,12 +12,21 @@ import errorHandler from '../../utils/ErrorHandler';
 import Modal from '../../components/ui/Modal/Modal';
 import Spinner from '../../components/ui/Spinner/Spinner';
 import service from '../../service';
+import getDefaults from '../../utils/get-defaults';
+import { creators as actionCreators } from '../../store/actions';
 
 class OrderContainer extends Component {
-  state = {
-    showOrderSummary: false,
-    orderSubmitted: false,
-  };
+  constructor(props) {
+    super(props);
+    getDefaults().then((data) => {
+      props.setDefaultPriceAndIngredients(data);
+    });
+
+    this.state = {
+      showOrderSummary: false,
+      orderSubmitted: false,
+    };
+  }
 
   getModalContent = () => {
     return this.state.orderSubmitted ?
@@ -45,8 +55,6 @@ class OrderContainer extends Component {
                 <BuildControls
                   ingredients={this.props.ingredients}
                   totalPrice={this.props.totalPrice}
-                  addIngredient={this.addIngredient}
-                  removeIngredient={this.removeIngredient}
                   continueOrder={this.toggleOrderSummaryModal}
                 />
               </Col>
@@ -62,26 +70,6 @@ class OrderContainer extends Component {
       return <p>Ingredientes cannot be loaded!</p>;
     }
     return <Spinner />;
-  }
-
-  addIngredient = (type) => {
-    const newIngredients = { ...this.props.ingredients };
-    newIngredients[type] += 1;
-    this.props.updateIngredientsAndPrice({
-      ingredients: newIngredients,
-      totalPrice: parseFloat((this.props.totalPrice + this.props.ingredientPrices[type]).toFixed(2)),
-    });
-  }
-
-  removeIngredient = (type) => {
-    if (this.props.ingredients[type]) {
-      const newIngredients = { ...this.props.ingredients };
-      newIngredients[type] -= 1;
-      this.props.updateIngredientsAndPrice({
-        ingredients: newIngredients,
-        totalPrice: parseFloat((this.props.totalPrice - this.props.ingredientPrices[type]).toFixed(2)),
-      });
-    }
   }
 
   toggleOrderSummaryModal = () => {
@@ -105,18 +93,33 @@ class OrderContainer extends Component {
 OrderContainer.propTypes = {
   ingredients: PropTypes.object,
   ingredientPrices: PropTypes.object,
-  hasError: PropTypes.bool.isRequired,
+  hasError: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   totalPrice: PropTypes.number,
-  updateIngredientsAndPrice: PropTypes.func.isRequired,
+  setDefaultPriceAndIngredients: PropTypes.func.isRequired
 };
 
 OrderContainer.defaultProps = {
   ingredients: {},
   ingredientPrices: {},
   totalPrice: 0,
+  hasError: false
 };
 
-export default errorHandler(withRouter(OrderContainer), service);
+const mapStateToProps = (state) => {
+  return {
+    hasError: state.hasError,
+    history: state.history,
+    ingredientPrices: state.ingredientPrices,
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setDefaultPriceAndIngredients: (data) => actionCreators.setDefaultPriceAndIngredients(data)(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(withRouter(OrderContainer), service));

@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CustomerInfoForm from './components/CustomerInfoForm';
 import Button from '../../components/ui/Button/Button';
 import Burger from '../../components/Burger/Burger';
 import Spinner from '../../components/ui/Spinner/Spinner';
 import service from '../../service';
+import { creators as actionCreators } from '../../store/actions';
 
 class Checkout extends Component {
-  state = {
-    name: '',
-    street: '',
-    postalCode: '',
-    email: '',
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      street: '',
+      postalCode: '',
+      email: '',
+    };
+
+    if (!props.ingredients || !props.totalPrice) {
+      this.props.history.replace('/');
+    }
   }
 
   onFormFieldUpdate = (e) => {
@@ -24,11 +34,13 @@ class Checkout extends Component {
   getMainContent = () => {
     if (this.props.ingredients && this.props.totalPrice) {
       return (
-        <div className="mui--text-center">
-          <h2 style={{ margin: '6rem 0 0' }}>You sure about this burger?</h2>
-          <Burger ingredients={this.props.ingredients} />
-          <Button btnType="danger" clickHandler={this.cancelCheckout}>CANCEL</Button>
-          <Button btnType="success" clickHandler={this.continueCheckout}>CONTINUE</Button>
+        <div>
+          <div className="mui--text-center">
+            <h2 style={{ margin: '6rem 0 0' }}>You sure about this burger?</h2>
+            <Burger ingredients={this.props.ingredients} />
+            <Button btnType="danger" clickHandler={this.cancelCheckout}>CANCEL</Button>
+            <Button btnType="success" clickHandler={this.continueCheckout}>CONTINUE</Button>
+          </div>
           <Route path={`${this.props.match.path}/customer-info`} render={() => (
             <CustomerInfoForm
               onFormFieldUpdate={this.onFormFieldUpdate}
@@ -70,7 +82,7 @@ class Checkout extends Component {
 
     service.post('/orders.json', order)
       .then(() => {
-        this.props.setDefaultIngredientsAndPrice();
+        this.props.setDefaultPriceAndIngredients();
         this.props.history.replace('/');
       })
       .catch(() => {
@@ -94,7 +106,7 @@ Checkout.propTypes = {
   }).isRequired,
   ingredients: PropTypes.object,
   totalPrice: PropTypes.number,
-  setDefaultIngredientsAndPrice: PropTypes.func.isRequired,
+  setDefaultPriceAndIngredients: PropTypes.func.isRequired,
 };
 
 Checkout.defaultProps = {
@@ -102,4 +114,13 @@ Checkout.defaultProps = {
   totalPrice: 0,
 };
 
-export default withRouter(Checkout);
+const mapStateToProps = (state) => ({
+  ingredients: state.ingredients,
+  totalPrice: state.totalPrice
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setDefaultPriceAndIngredients: (data) => actionCreators.setDefaultPriceAndIngredients(data)(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout));

@@ -11,8 +11,6 @@ const buildControls = (props) => (
         return (<BuildControl
           key={ingKey}
           label={ingKey}
-          onAddHandler={props.addIngredient}
-          onRemoveHandler={props.removeIngredient}
           removeIngredientDisabled={!props.ingredients[ingKey]}
         />);
       })
@@ -31,8 +29,6 @@ const buildControls = (props) => (
 buildControls.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   ingredients: PropTypes.object.isRequired,
-  addIngredient: PropTypes.func.isRequired,
-  removeIngredient: PropTypes.func.isRequired,
   continueOrder: PropTypes.func.isRequired,
 };
 

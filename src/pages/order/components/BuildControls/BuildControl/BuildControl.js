@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { creators as actionCreators } from '../../../../../store/actions';
 import './BuildControl.css';
 
 const buildControl = (props) => (
@@ -7,13 +9,13 @@ const buildControl = (props) => (
     <div className="Label">{props.label.toUpperCase()}</div>
     <button
       className="more"
-      onClick={() => props.onAddHandler(props.label)}
+      onClick={() => props.addIngredient(props.label)}
     >+
     </button>
     <button
       disabled={props.removeIngredientDisabled}
       className="less"
-      onClick={() => props.onRemoveHandler(props.label)}
+      onClick={() => props.removeIngredient(props.label)}
     >-
     </button>
   </div>
@@ -21,9 +23,14 @@ const buildControl = (props) => (
 
 buildControl.propTypes = {
   label: PropTypes.string.isRequired,
-  onAddHandler: PropTypes.func.isRequired,
+  addIngredient: PropTypes.func.isRequired,
   removeIngredientDisabled: PropTypes.bool.isRequired,
-  onRemoveHandler: PropTypes.func.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
 };
 
-export default buildControl;
+const mapDispatchToProps = (dispatch) => ({
+  addIngredient: (type) => actionCreators.addIngredient(type)(dispatch),
+  removeIngredient: (type) => actionCreators.removeIngredient(type)(dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(buildControl);

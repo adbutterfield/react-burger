@@ -6,11 +6,11 @@ import Button from '../../../components/ui/Button/Button';
 import './CustomerInfoForm.css';
 
 const customerInfoForm = (props) => (
-  <Form className="customer-info-form">
-    <Input type="text" name="name" placeholder="Name" onChange={props.onFormFieldUpdate} value={props.name} />
-    <Input type="text" name="street" placeholder="Street" onChange={props.onFormFieldUpdate} value={props.street} />
-    <Input type="text" name="postalCode" placeholder="Postal Code" onChange={props.onFormFieldUpdate} value={props.postalCode} />
-    <Input type="text" name="email" placeholder="Email" onChange={props.onFormFieldUpdate} value={props.email} />
+  <Form className="customer-info-form" onSubmit={props.placeOrder}>
+    <Input type="text" name="name" label="Name" onChange={props.onFormFieldUpdate} value={props.name} required />
+    <Input type="text" name="street" label="Street" onChange={props.onFormFieldUpdate} value={props.street} required />
+    <Input type="text" name="postalCode" label="Postal Code" onChange={props.onFormFieldUpdate} value={props.postalCode} required />
+    <Input type="text" name="email" label="Email" onChange={props.onFormFieldUpdate} value={props.email} required />
     <Button btnType="success" clickHandler={props.placeOrder}>PLACE ORDER</Button>
   </Form>
 );

@@ -10,6 +10,7 @@
     "camelcase": ["warn", {
       "properties": "always"
     }],
+    "comma-dangle": "off",
     "max-len": "warn",
     "no-shadow": ["error", {
       "builtinGlobals": true
