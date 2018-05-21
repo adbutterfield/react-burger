@@ -29,8 +29,8 @@ buildControl.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addIngredient: (type) => actionCreators.addIngredient(type)(dispatch),
-  removeIngredient: (type) => actionCreators.removeIngredient(type)(dispatch)
+  addIngredient: (type) => dispatch(actionCreators.addIngredient(type)),
+  removeIngredient: (type) => dispatch(actionCreators.removeIngredient(type))
 });
 
 export default connect(null, mapDispatchToProps)(buildControl);

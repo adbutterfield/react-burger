@@ -5,24 +5,28 @@ const initialState = {
   totalPrice: null,
   ingredientPrices: null,
   hasError: false,
+  orders: [],
+  isLoading: false
 };
 
 const addIngredient = (state, action) => {
-  const newIngredients = { ...state.ingredients };
-  newIngredients[action.ingredient] += 1;
   return {
     ...state,
-    ingredients: newIngredients,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredient]: state.ingredients[action.ingredient] + 1
+    },
     totalPrice: parseFloat((state.totalPrice + state.ingredientPrices[action.ingredient]).toFixed(2)),
   };
 };
 
 const removeIngredient = (state, action) => {
-  const newIngredients = { ...state.ingredients };
-  newIngredients[action.ingredient] -= 1;
   return {
     ...state,
-    ingredients: newIngredients,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredient]: state.ingredients[action.ingredient] - 1
+    },
     totalPrice: parseFloat((state.totalPrice - state.ingredientPrices[action.ingredient]).toFixed(2)),
   };
 };
@@ -40,6 +44,24 @@ const reducer = (state = initialState, action) => {
     }
     case actionTypes.REMOVE_INGREDIENT: {
       return removeIngredient(state, action);
+    }
+    case actionTypes.SET_ORDERS: {
+      return {
+        ...state,
+        orders: action.orders
+      };
+    }
+    case actionTypes.IS_LOADING: {
+      return {
+        ...state,
+        isLoading: true
+      };
+    }
+    case actionTypes.DONE_LOADING: {
+      return {
+        ...state,
+        isLoading: false
+      };
     }
     default: {
       return state;

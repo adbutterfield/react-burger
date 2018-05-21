@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import OrderDetails from './components/OrderDetails';
 import Spinner from '../../components/ui/Spinner/Spinner';
 import ErrorHandler from '../../utils/ErrorHandler';
 import service from '../../service';
+import { creators as actionCreators } from '../../store/actions';
 import './OrdersContainer.css';
 
 class OrdersContainer extends Component {
@@ -10,28 +13,9 @@ class OrdersContainer extends Component {
     super(props);
 
     this.state = {
-      orders: [],
-      loading: true,
       hasError: false,
     };
-    this.getOrders();
-  }
-
-  getOrders = () => {
-    service.get('/orders.json')
-      .then((response) => {
-        this.setState({
-          orders: Object.keys(response.data).map((orderId) => {
-            return { id: orderId, ...response.data[orderId] };
-          }),
-          loading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          hasError: true,
-        });
-      });
+    this.props.getOrders();
   }
 
   getMainContent = () => {
@@ -42,7 +26,7 @@ class OrdersContainer extends Component {
       return <Spinner />;
     }
     return (
-      this.state.orders.map((order) => (
+      this.props.orders.map((order) => (
         <OrderDetails
           key={order.id}
           ingredients={order.ingredients}
@@ -61,4 +45,17 @@ class OrdersContainer extends Component {
   }
 }
 
-export default ErrorHandler(OrdersContainer, service);
+OrdersContainer.propTypes = {
+  orders: PropTypes.array.isRequired,
+  getOrders: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  orders: state.orders
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getOrders: () => dispatch(actionCreators.getOrders())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorHandler(OrdersContainer, service));

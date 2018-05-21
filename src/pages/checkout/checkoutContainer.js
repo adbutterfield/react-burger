@@ -120,7 +120,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setDefaultPriceAndIngredients: (data) => actionCreators.setDefaultPriceAndIngredients(data)(dispatch),
+  setDefaultPriceAndIngredients: () => dispatch(actionCreators.setDefaultPriceAndIngredients()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout));

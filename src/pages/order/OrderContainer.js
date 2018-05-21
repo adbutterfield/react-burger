@@ -12,16 +12,12 @@ import errorHandler from '../../utils/ErrorHandler';
 import Modal from '../../components/ui/Modal/Modal';
 import Spinner from '../../components/ui/Spinner/Spinner';
 import service from '../../service';
-import getDefaults from '../../utils/get-defaults';
 import { creators as actionCreators } from '../../store/actions';
 
 class OrderContainer extends Component {
   constructor(props) {
     super(props);
-    getDefaults().then((data) => {
-      props.setDefaultPriceAndIngredients(data);
-    });
-
+    props.setDefaultPriceAndIngredients();
     this.state = {
       showOrderSummary: false,
       orderSubmitted: false,
@@ -119,7 +115,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setDefaultPriceAndIngredients: (data) => actionCreators.setDefaultPriceAndIngredients(data)(dispatch),
+  setDefaultPriceAndIngredients: () => dispatch(actionCreators.setDefaultPriceAndIngredients()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(withRouter(OrderContainer), service));
